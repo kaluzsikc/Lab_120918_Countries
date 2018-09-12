@@ -8,10 +8,13 @@ SelectView.prototype.bindEvents = function () {
     const countriesArray = e.detail.map(country => {
       return country['name'];
     });
-    console.log(countriesArray);
     for (i = 0; i<countriesArray.length; i++) {
       this.element.appendChild(populate('option', i, countriesArray[i]));
     }
+  })
+  this.element.addEventListener('change', (e) => {
+    const selectedIndex = e.target.value;
+    PubSub.publish('SelectView:change', selectedIndex);
   })
 };
 
