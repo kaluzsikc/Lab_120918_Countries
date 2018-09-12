@@ -6,6 +6,13 @@ const Countries = function() {
   this.info = [];
 };
 
+Countries.prototype.bindEvents = function () {
+  PubSub.subscribe('SelectView:change', (e) => {
+    const selectedIndex = e.detail;
+    PubSub.publish('Countries:Result-Display', this.info[selectedIndex]);
+  })
+};
+
 Countries.prototype.getData = function () {
   const request = new Request('https://restcountries.eu/rest/v2/all');
 
@@ -18,7 +25,6 @@ Countries.prototype.getData = function () {
       return rCountry;
     });
     PubSub.publish('Countries:countries-loaded', this.info);
-
   });
 };
 
