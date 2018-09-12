@@ -6,14 +6,20 @@ const ResultView = function(container) {
 
 ResultView.prototype.bindEvents = function () {
   PubSub.subscribe('Countries:Result-Display', (e) => {
-    this.HTMLRender('h1', e.detail.name);
-    this.HTMLRender('h2', e.detail.region);
+    this.container.innerHTML = '';
+    this.HTMLRender('h1', e.detail.name, null);
     this.HTMLRender('img', '', e.detail.flag);
-
+    this.HTMLRender('h2', 'Region: ', null);
+    this.HTMLRender('h3', e.detail.region, null);
+    this.HTMLRender('h2', 'Languages: ', null);
+    this.HTMLRender('ul', null, null);
+    for (language of e.detail.languages) {
+      this.HTMLRender('li', language.name, null, this.container.lastChildElement);
+    }
   })
 };
 
-ResultView.prototype.HTMLRender = function(tag, element_name, img) {
+ResultView.prototype.HTMLRender = function(tag, element_name, img, parent=this.container) {
   const item = document.createElement(tag);
   item.textContent = element_name;
   if (img) {

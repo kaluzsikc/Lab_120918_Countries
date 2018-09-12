@@ -22,8 +22,10 @@ Countries.prototype.getData = function () {
       rCountry['name'] = country['name'];
       rCountry['region'] = country['region'];
       rCountry['flag'] = country['flag'];
+      rCountry['languages'] = country['languages'];
       return rCountry;
     });
+    console.log(this.info);
     PubSub.publish('Countries:countries-loaded', this.info);
   });
 };
